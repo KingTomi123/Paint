@@ -88,37 +88,57 @@
         <div id="rectSettings">
          <h2 >Settings</h2>
          <hr>
-         <label>Size:</label>
-         <input type="range" min="1" max="20" step="1" v-model="strokeWidth">
-         <input type="number" v-model="strokeWidth">
-         <br>
-         
-         <label>Stroke Color:</label>
-          <input type="color" v-model="stroke">
-          <br>
-          <label>Enable Dash:</label>
-          <input type="checkbox" v-model="dashEnabled">
-           <br>
-          <label>Dash:</label>
-          <input type="number" v-model="dash1">
-          <input type="number" v-model="dash2">
-          <input type="number" v-model="dash3">
-          <input type="number" v-model="dash4">
-          <input type="number" v-model="dash5">
-          <input type="number" v-model="dash6">
-              
+         <div class="settingsContainer">
+           <div class="innerSettings">
+            <h3>Line Settings</h3>
+            <label>Size:</label>
+            <input type="range" min="1" max="20" step="1" v-model="strokeWidth">
+            <input type="number" v-model="strokeWidth">
+            <br>
+          
+            <label>Stroke Color:</label>
+            <input type="color" v-model="stroke">
+            <br>
+            
+           
+            <label>Dash:</label>
+            <input type="checkbox" v-model="dashEnabled">
+            <div v-if="dashEnabled" id="dashSettings">
+            <input type="number" v-model="dash1" class="dashInput">
+            <input type="number" v-model="dash2" class="dashInput">
+            <input type="number" v-model="dash3" class="dashInput">
+            <input type="number" v-model="dash4" class="dashInput">
+            <input type="number" v-model="dash5" class="dashInput">
+            <input type="number" v-model="dash6" class="dashInput">
+            </div>
+          </div>
+          </div>
+
+          <hr> 
               
           
-         <hr>
-         <label>Enable Fill:</label>
-          <input type="checkbox" v-model="fillEnabled">
-         <br>
+        <div class="settingsContainer">
+        <div class="innerSettings">
+         
+         
          <label>Fill:</label>
+         <input type="checkbox" v-model="fillEnabled">
+         <div v-if="fillEnabled" id="dashSettings">
+           <label>Fill Color:</label>
           <input type="color" v-model="fill">
-          <hr>
-         <label>Enable Shadow:</label>
+          </div>
+          
+        </div>
+        </div>
+        <hr>
+
+        <div class="settingsContainer">
+        <div class="innerSettings">
+         
+         <label>Shadow:</label>
          <input type="checkbox" v-model="shadowEnabled">
          <br>
+         <div v-if="shadowEnabled" id="dashSettings">
          <label>Shadow Color:</label>
          <input type="color" v-model="shadowColor">
          <br>
@@ -131,9 +151,13 @@
          <br>
          <label>Shadow Opacity:</label>
          <input type="number" v-model="shadowOpacity">
+        </div></div></div>
          <hr>
+         <div class="settingsContainer">
+          <div class="innerSettings">
          <label>Opacity:</label>
          <input type="range" min="0" max="1" step="0.01" v-model="opacity">{{opacity}}
+          </div></div>
          
          
 
@@ -142,17 +166,20 @@
 
         <hr>
         <div id="layers">
-
-           <button @click="addInput" ref="button">Add input</button>
+            <div class="settingsContainer">
+           <div class="innerSettings"> 
+           <button @click="addInput" ref="button" id="addLayerButton">Add Layer</button><br>
+           
 
            <div v-for="(item, indexR) in layers" v-bind:key="item.id" class="layerSettings">
               
-              <span> Layer: {{layers[indexR]}}</span> 
-              <button v-on:click="ButtonPress(indexR)" ref="layerBtn">Layer: {{layers[indexR]}}</button>
+             
+              <button v-on:click="ButtonPress(indexR)" ref="layerBtn" class="layerButton">Layer: {{layers[indexR]}}</button>
               <input type="checkbox" ref="checkbox" v-on:click="handleCheckbox(indexR)" checked>
               
             
            </div>
+           </div></div>
         </div>
 
      
@@ -948,7 +975,7 @@ template {
 }
 #menu{
   width:100%;
-  height:50px;
+  height:55px;
   background-color:#474747;
   margin-bottom:1px;
   
@@ -956,26 +983,30 @@ template {
 #menuContainer{
   background-color:#474747;
   margin-left:5%;
-  height:35px;
+  height:55px;
   width:120px;
   
   
 }
 .menuButton{
  
-  all:unset;
+
   border:none;
-  background-color:gray;
-  color:white;
+  
+ 
   width:50px;
   height:35px;
   margin-right:10px;
 }
 .menuButton:hover{
-  
-  border:none;
-  background-color:#242424;
+
+  border:5px solid gray;
+  background-color:gray;
   color:white;
+  width:50px;
+  height:35px;
+  margin-right:10px;
+  cursor: pointer;
 }
 #tools {
   width: 5%;
@@ -1003,14 +1034,21 @@ template {
   background-color: #474747;
   color: white;
 }
-.tool:hover {
+.tool:hover{
   width: 80%;
   height: 50px;
   margin: 10%;
-  border: none;
-  background-color: gray;
+  border: 5px solid gray;
   cursor: pointer;
 }
+.tool:active{
+  width: 80%;
+  height: 50px;
+  margin: 10%;
+  border: 5px solid gray;
+  cursor: pointer;
+}
+
 h2{
   background-color:#474747;
   text-align: center;
@@ -1025,16 +1063,19 @@ h2{
 }
 #rectSettings{
   width: 100%;
-  height:  45vh;
+  
   background-color:#474747;
 }
 #layers{
   width: 100%;
-  height: 45vh;
+  
   background-color:#474747;
 }
 input[type=range]{
   width:120px;
+  position:relative;
+  top:4px;
+  left: 5px;
   
   margin-right:20px;
   
@@ -1044,9 +1085,63 @@ input[type=number]{
   
 
 }
+input[type=color]{
+ position:relative;
+  top:2px;
+  left:5px;
+}
+input[type=checkbox]{
+ position:relative;
+  top:2px;
+  left:5px;
+  
+
+}
 label{
   background-color:#474747 ;
   color:white;
 }
+.settingsContainer{
+  width:90%;
+  margin:5%;
+  border-radius: 25px;
+  background-color:#474747;
+
+  
+}
+.settingsContainer h3{
+  
+  background-color:#474747;
+  color:white
+
+  
+}
+.innerSettings{
+  background-color:#474747;
+  
+}
+.layerButton{
+  width:90%;
+  height:30px;
+  border:3px solid #242424;
+  background-color:#0075ff;
+  color:white;
+  font-size: 15px;
+}
+.layerSettings{
+background-color:#474747;
+}
+
+#addLayerButton{
+  border:none;
+  padding:5px;
+  margin-bottom:10px;
+  background-color:#E7E6DD;
+  
+}
+#dashSettings{
+  background-color:#474747;
+}
+
 
 </style>
