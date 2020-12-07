@@ -15,14 +15,14 @@
     <div id="tools">
 
       
-      <button class="tool" @click="handlePointer"><img src="./assets/icons/pointerWhite.png"></button>
-      <button class="tool" @click="handleLine"><img src="./assets/icons/lineWhite.png"></button>
-      <button class="tool" @click="handleTraingle"><img src="./assets/icons/triangleWhite.png"></button>
-      <button class="tool" @click="handleRect"><img src="./assets/icons/rectWhite.png"></button>
-      <button class="tool" @click="handleSquare"><img src="./assets/icons/squareWhite.png"></button>
-      <button class="tool" @click="handleCircle"><img src="./assets/icons/circleWhite.png"></button>
-      <button class="tool" @click="handleZoom"><img src="./assets/icons/zoomWhite.png"></button>
-      <button class="tool" @click="handleMove"><img src="./assets/icons/moveWhite.png"></button>
+      <button class="tool" @click="handlePointer" ref="pointerRef"><img src="./assets/icons/pointerWhite.png"></button>
+      <button class="tool" @click="handleLine"  ref="pointerLine"><img src="./assets/icons/lineWhite.png"></button>
+      <button class="tool" @click="handleTraingle"  ref="pointerTriangle"><img src="./assets/icons/triangleWhite.png"></button>
+      <button class="tool" @click="handleRect"  ref="pointerRect"><img src="./assets/icons/rectWhite.png"></button>
+      <button class="tool" @click="handleSquare"  ref="pointerSquare"><img src="./assets/icons/squareWhite.png"></button>
+      <button class="tool" @click="handleCircle"  ref="pointerCircle"><img src="./assets/icons/circleWhite.png"></button>
+      <button class="tool" @click="handleZoom"  ref="pointerZoom"><img src="./assets/icons/zoomWhite.png"></button>
+      <button class="tool" @click="handleMove"  ref="pointerMove"><img src="./assets/icons/moveWhite.png"></button>
      
     </div>
     <div id="canvas">
@@ -168,7 +168,7 @@
         <div id="layers">
             <div class="settingsContainer">
            <div class="innerSettings"> 
-           <button @click="addInput" ref="button" id="addLayerButton">Add Layer</button><br>
+           <button @click="addLayer" ref="button" id="addLayerButton">Add Layer</button><br>
            
 
            <div v-for="(item, indexR) in layers" v-bind:key="item.id" class="layerSettings">
@@ -198,7 +198,7 @@
 /* eslint-disable */
 const width = window.innerWidth;
 const height = window.innerHeight;
-
+var counter = 0;
 
 
 
@@ -346,6 +346,8 @@ export default {
 
       width: 1,
       height: 1,
+
+      activeBtn:'',
     };
   },
   methods: {
@@ -377,10 +379,14 @@ export default {
       this.ifList.push("a");
       this.ifList.pop();
     },
-    addInput(event) {
+    addLayer(event) {
+      if(counter <= 13){
       this.layers.push(this.layers.length);
       this.ifList.push("true");
       console.log(this.ifList);
+      counter = counter + 1;
+      }
+      
     },
      
     handleShowColor(event) {
@@ -739,6 +745,15 @@ export default {
       );
     },
      handlePointer(event) {
+      this.$refs.pointerRef.style.border = "5px solid gray"
+      this.$refs.pointerLine.style.border = "none"
+      this.$refs.pointerTriangle.style.border = "none"
+      this.$refs.pointerRect.style.border = "none"
+      this.$refs.pointerSquare.style.border = "none"
+      this.$refs.pointerCircle.style.border = "none"
+      this.$refs.pointerZoom.style.border = "none"
+      this.$refs.pointerMove.style.border = "none"
+
       this.pointer = true;
       this.rect = false;
       this.line = false;
@@ -747,6 +762,15 @@ export default {
       this.move= false;
      },
     handleLine(event) {
+      this.$refs.pointerRef.style.border = "none"
+      this.$refs.pointerLine.style.border = "5px solid gray"
+      this.$refs.pointerTriangle.style.border = "none"
+      this.$refs.pointerRect.style.border = "none"
+      this.$refs.pointerSquare.style.border = "none"
+      this.$refs.pointerCircle.style.border = "none"
+      this.$refs.pointerZoom.style.border = "none"
+      this.$refs.pointerMove.style.border = "none"
+
       this.pointer = false;
       this.rect = false;
       this.line = true;
@@ -756,6 +780,15 @@ export default {
        
      },
     handleRect(event) {
+       this.$refs.pointerRef.style.border = "none"
+      this.$refs.pointerLine.style.border = "none"
+      this.$refs.pointerTriangle.style.border = "none"
+      this.$refs.pointerRect.style.border = "5px solid gray"
+      this.$refs.pointerSquare.style.border = "none"
+      this.$refs.pointerCircle.style.border = "none"
+      this.$refs.pointerZoom.style.border = "none"
+      this.$refs.pointerMove.style.border = "none"
+
       this.pointer = false;
       this.rect = true;
       this.line = false;
@@ -764,6 +797,15 @@ export default {
       this.move= false;
      },
     handleTraingle(event) {
+      this.$refs.pointerRef.style.border = "none"
+      this.$refs.pointerLine.style.border = "none"
+      this.$refs.pointerTriangle.style.border = "5px solid gray"
+      this.$refs.pointerRect.style.border = "none"
+      this.$refs.pointerSquare.style.border = "none"
+      this.$refs.pointerCircle.style.border = "none"
+      this.$refs.pointerZoom.style.border = "none"
+      this.$refs.pointerMove.style.border = "none"
+
       this.pointer = false;
       this.rect = false;
       this.line = false;
@@ -774,6 +816,15 @@ export default {
       this.rotation = 0;
     },
     handleSquare(event) {
+      this.$refs.pointerRef.style.border = "none"
+      this.$refs.pointerLine.style.border = "none"
+      this.$refs.pointerTriangle.style.border = "none"
+      this.$refs.pointerRect.style.border = "none"
+      this.$refs.pointerSquare.style.border = "5px solid gray"
+      this.$refs.pointerCircle.style.border = "none"
+      this.$refs.pointerZoom.style.border = "none"
+      this.$refs.pointerMove.style.border = "none"
+
       this.pointer = false;
       this.rect = false;
       this.line = false;
@@ -784,6 +835,15 @@ export default {
       this.rotation = 45;
     },
     handleCircle(event) {
+      this.$refs.pointerRef.style.border = "none"
+      this.$refs.pointerLine.style.border = "none"
+      this.$refs.pointerTriangle.style.border = "none"
+      this.$refs.pointerRect.style.border = "none"
+      this.$refs.pointerSquare.style.border = "none"
+      this.$refs.pointerCircle.style.border = "5px solid gray"
+      this.$refs.pointerZoom.style.border = "none"
+      this.$refs.pointerMove.style.border = "none"
+
       this.pointer = false;
       this.rect = false;
       this.line = false;
@@ -794,6 +854,15 @@ export default {
       this.rotation = 45;
     },
     handleZoom(event) {
+      this.$refs.pointerRef.style.border = "none"
+      this.$refs.pointerLine.style.border = "none"
+      this.$refs.pointerTriangle.style.border = "none"
+      this.$refs.pointerRect.style.border = "none"
+      this.$refs.pointerSquare.style.border = "none"
+      this.$refs.pointerCircle.style.border = "none"
+      this.$refs.pointerZoom.style.border = "5px solid gray"
+      this.$refs.pointerMove.style.border = "none"
+
       this.pointer = false;
       this.rect = false;
       this.line = false;
@@ -802,6 +871,15 @@ export default {
       this.move= false;
     },
     handleMove(event){
+      this.$refs.pointerRef.style.border = "none"
+      this.$refs.pointerLine.style.border = "none"
+      this.$refs.pointerTriangle.style.border = "none"
+      this.$refs.pointerRect.style.border = "none"
+      this.$refs.pointerSquare.style.border = "none"
+      this.$refs.pointerCircle.style.border = "none"
+      this.$refs.pointerZoom.style.border = "none"
+      this.$refs.pointerMove.style.border = "5px solid gray"
+
       this.pointer = false;
       this.rect = false;
       this.line = false;
@@ -888,7 +966,7 @@ export default {
      
 },
 beforeMount(){
-    this.addInput()
+    this.addLayer()
  },
  computed:{
      cursorStyle: function(){
@@ -1142,6 +1220,7 @@ background-color:#474747;
 #dashSettings{
   background-color:#474747;
 }
+
 
 
 </style>
